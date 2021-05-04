@@ -15,11 +15,13 @@ export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [id, setId] = useState(0)
-  const [toggleTask, setToggleTask] = useState()
 
   function handleCreateNewTask() {
     setId(id+1)
 
+    if (newTaskTitle === ''){
+      return
+    } 
     const addTask = {
       id,
       title: newTaskTitle,
@@ -29,8 +31,12 @@ export function TaskList() {
   }
 
   function handleToggleTaskCompletion(id: number) {
-    const toggleTask = tasks[id]
+    const handleToggleTask = tasks.map(task => task.id === id ? {
+      ...task, 
+      isComplete: !task.isComplete
+    } : task);
 
+    setTasks(handleToggleTask);
 
   }
 
